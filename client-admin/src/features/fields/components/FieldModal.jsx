@@ -51,7 +51,7 @@ export const FieldModal = ( {isOpen, onClose, field}) => {
             const file = photoFile[0];
             setPreview(URL.createObjectURL(file))
         }
-    })
+    }, [photoFile])
 
     const onSubmit = async (data) => {
         await saveField(data, field?._id);
