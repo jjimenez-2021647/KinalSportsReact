@@ -43,7 +43,7 @@ export const Users = () => {
       .toLocaleLowerCase();
 
       const username = (u.username || "").toLocaleLowerCase();
-      const role = (u.role || "");
+      const role = (u.role || "").toUpperCase();
 
       const matchesSearch =
         !normalizedSearch ||
@@ -51,7 +51,7 @@ export const Users = () => {
         username.includes(normalizedSearch);
 
         const matchesRole = 
-          roleFilter === "ALL" ? true : role === roleFilter;
+          roleFilter === "ALL" ? true : role === roleFilter.toUpperCase();
 
         return matchesRole && matchesSearch
     })
