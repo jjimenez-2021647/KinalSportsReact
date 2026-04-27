@@ -4,10 +4,14 @@ import { Spinner } from "../../../shared/components/layout/Spinner.jsx";
 import { useEffect as useToastEffect } from "react";
 import { showError } from "../../../shared/utils/toast.js";
 import { FieldModal } from "./FieldModal.jsx";
+import { useUIStore } from "../../../shared/components/ui/store/uiStore.js";
+import { deletedField } from "../../../shared/api/admin.js";
 
 export const Fields = () => {
   const { fields, loading, error, getFields } = useFieldStore();
   const [openModal, setOpenModal] = useState(false);
+  const [selectedField, setSelectedField] = useState(null);
+  const { openConfirm } = useUIStore();
 
   useEffect(() => {
     getFields();
@@ -33,7 +37,8 @@ export const Fields = () => {
 
         <button
           onClick={() => {
-            setOpenModal(true);
+            setOpenModal(true)
+            setSelectedField(null)
           }}
           className="bg-main-blue px-4 py-2 rounded text-white hover:opacity-90 transition"
         >
@@ -72,11 +77,26 @@ export const Fields = () => {
               </p>
 
               <div className="flex gap-3 mt-5">
-                <button className="flex-1 py-2 rounded-lg bg-main-blue text-white font-medium hover:opacity-90 transition">
+                <button 
+                  className="flex-1 py-2 rounded-lg bg-main-blue text-white font-medium hover:opacity-90 transition"
+                  onClick={() => {
+                    setSelectedField(field)
+                    setOpenModal(true)
+                  }}
+                  >
                   ✏️ Editar
                 </button>
 
-                <button className="flex-1 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition">
+                <button 
+                className="flex-1 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition"
+                onClick={() => 
+                  openConfirm({
+                    title: "Eliminar campo",
+                    message: `Eliminar ${field.fieldName}`,
+                    onConfirm: () => deletedField(field._id)
+                  })
+                }
+                >
                   🗑️ Eliminar
                 </button>
               </div>
@@ -89,7 +109,11 @@ export const Fields = () => {
         isOpen={openModal}
         onClose={() => {
           setOpenModal(false);
+          setSelectedField(null)
+          
         }}
+        field = {selectedField}
+        
       />
     </div>
   );

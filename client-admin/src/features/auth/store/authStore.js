@@ -4,23 +4,87 @@ import {
   login as loginRequest,
   register as registerRequest,
 } from "../../../shared/api";
+import { handleRefreshToken } from "../../../shared/api/api";
+import { showError } from "../../../shared/utils/toast";
 
 export const useAuthStore = create(
   persist(
     (set, get) => ({
       user: null,
       token: null,
+      refreshToken: null,
       expiresAt: null,
       loading: false,
       error: null,
+      isLoadingAuth: true,
       isAuthenticated: false,
-
+ 
+      checkAuth: () => {
+        const token = get().token;
+        const role = get().user?.role;
+        const isAdmin = role === "ADMIN_ROLE";
+ 
+        if (token && !isAdmin) {
+          set({
+            user: null,
+            token: null,
+            refreshToken: null,
+            expiresAt: null,
+            isLoadingAuth: true,
+            isAuthenticated: false,
+            error: "No tienes permisos para acceder como administrador."
+          })
+          return;
+ 
+        }
+ 
+        set({
+ 
+          isLoadingAuth: false,
+          isAuthenticated: Boolean(token) && isAdmin
+        })
+ 
+      },
+ 
+ 
       login: async ({ emailOrUsername, password }) => {
         try {
           set({ loading: true, error: null });
           const { data } = await loginRequest({ emailOrUsername, password });
           console.log(data);
-
+ 
+          const role = data?.userDetails?.role;
+ 
+          if (role !== "ADMIN_ROLE") {
+            const message = "No tiene permisos para acceder como administrador"
+            set({
+              user: null,
+              token: null,
+              refreshToken: null,
+              expiresAt: null,
+              error: message,
+              isLoadingAuth: true,
+              isAuthenticated: false,
+ 
+ 
+            })
+ 
+            showError(message)
+            return { succes: false, error: message }
+ 
+          }
+ 
+          set({
+            user: data.userDetails,
+            token: data.accessToken,
+            refreshToken: data.refreshToken,
+            expiresAt: data.expiresAt,
+            loading: false,
+            isAuthenticated: true
+ 
+ 
+          })
+ 
           set({
             user: data.userDetails,
             token: data.accessToken,
@@ -28,7 +92,7 @@ export const useAuthStore = create(
             loading: false,
             isAuthenticated: true,
           });
-
+ 
           return { success: true, error: null };
         } catch (err) {
           console.error("Login error:", err);
@@ -38,7 +102,7 @@ export const useAuthStore = create(
           return { success: false, error: message };
         }
       },
-
+ 
       register: async (formData) => {
         try {
           set({ loading: true, error: null });
@@ -55,7 +119,7 @@ export const useAuthStore = create(
           return { success: false, error: message };
         }
       },
-
+ 
       logout: () => {
         set({
           user: null,
