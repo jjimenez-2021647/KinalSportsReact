@@ -7582,11 +7582,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\KinalSportsIN6BM\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
+      "projectUniqueName": "C:\\KinalSportsReact\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
       "projectName": "AuthService.Api",
-      "projectPath": "C:\\KinalSportsIN6BM\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
+      "projectPath": "C:\\KinalSportsReact\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
       "packagesPath": "C:\\Users\\joshu\\.nuget\\packages\\",
-      "outputPath": "C:\\KinalSportsIN6BM\\authentication-service\\auth-service\\src\\AuthService.Api\\obj\\",
+      "outputPath": "C:\\KinalSportsReact\\authentication-service\\auth-service\\src\\AuthService.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\joshu\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -7601,11 +7601,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\KinalSportsIN6BM\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj": {
-              "projectPath": "C:\\KinalSportsIN6BM\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj"
+            "C:\\KinalSportsReact\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj": {
+              "projectPath": "C:\\KinalSportsReact\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj"
             },
-            "C:\\KinalSportsIN6BM\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj": {
-              "projectPath": "C:\\KinalSportsIN6BM\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj"
+            "C:\\KinalSportsReact\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj": {
+              "projectPath": "C:\\KinalSportsReact\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj"
             }
           }
         }

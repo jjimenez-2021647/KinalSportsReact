@@ -7,6 +7,7 @@ import { Users } from "../../features/users/components/Users.jsx";
 import { Fields } from "../../features/fields/components/Fields.jsx";
 import { VerifyEmailPage } from "../../features/auth/pages/VerifyEmailPage.jsx";
 import { UnauthorizedPage } from "../../features/auth/pages/UnauthorizedPage.jsx";
+import { ResetPasswordPage } from "../../features/auth/pages/ResetPasswordPage.jsx";
 
 export const AppRoutes = () => {
     return (
@@ -14,6 +15,7 @@ export const AppRoutes = () => {
             {/* RUTAS PUBLICAS */}
             <Route path="/" element={<AuthPage />} />
             <Route path="/verify-email" element={<VerifyEmailPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="unauthorized" element={<UnauthorizedPage />} />
 
             {/* PROCTED ROUTES + ROLE */}
