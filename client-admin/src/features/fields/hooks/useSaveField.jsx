@@ -13,16 +13,16 @@ export const useSaveField = () => {
         formData.append("pricePerHour", data.pricePerHour);
         formData.append("description", data.description);
 
-        if(data.photo?.length > 0){
+        if(data.photo?.length > 0) {
             formData.append("image", data.photo[0]);
         }
 
-        if(fieldId){
+        if(fieldId) {
             await updateField(fieldId, formData)
         } else {
             await createField(formData)
         }
-    } 
+    }
 
     return { saveField };
 }

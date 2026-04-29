@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import { verifyEmail as verifyEmailRequest } from "../../../shared/api";
-import { showError, showSuccess } from "../../../shared/utils/toast";
+import { showError, showSuccess } from "../../../shared/utils/toast.js"
 
 // Evita múltiples requests en React StrictMode (montaje doble).
 const verifyPromiseByToken = new Map();
 const verifyResultByToken = new Map();
 const toastShownByToken = new Map();
 const finishCalledByToken = new Map();
- 
+
 export const useVerifyEmail = (token, onSuccess) => {
   const [status, setStatus] = useState("loading");
   const [message, setMessage] = useState("");
- 
+
   useEffect(() => {
     let isMounted = true;
- 
+
     const run = async () => {
       if (!token) {
         setStatus("error");
@@ -29,7 +29,7 @@ export const useVerifyEmail = (token, onSuccess) => {
         }
         return;
       }
- 
+
       // Si ya se resolvió previamente, reusar resultado.
       const cached = verifyResultByToken.get(token);
       if (cached) {
@@ -49,7 +49,7 @@ export const useVerifyEmail = (token, onSuccess) => {
         }
         return;
       }
- 
+
       // Si ya hay un request en curso para este token, reusar la promesa.
       let promise = verifyPromiseByToken.get(token);
       if (!promise) {
@@ -64,7 +64,7 @@ export const useVerifyEmail = (token, onSuccess) => {
               });
               return { status: "success", message: successMessage };
             }
- 
+
             const errorMessage = "El enlace ha expirado o no es válido.";
             verifyResultByToken.set(token, {
               status: "error",
@@ -83,35 +83,35 @@ export const useVerifyEmail = (token, onSuccess) => {
           .finally(() => {
             verifyPromiseByToken.delete(token);
           });
- 
+
         verifyPromiseByToken.set(token, promise);
       }
- 
+
       const result = await promise;
- 
+
       if (isMounted) {
         setStatus(result.status);
         setMessage(result.message);
       }
- 
+
       if (!toastShownByToken.get(token)) {
         toastShownByToken.set(token, true);
         result.status === "success"
           ? showSuccess("¡Correo verificado correctamente!")
           : showError(result.message);
       }
- 
+
       if (!finishCalledByToken.get(token)) {
         finishCalledByToken.set(token, true);
         onSuccess && onSuccess();
       }
     };
- 
+
     run();
     return () => {
       isMounted = false;
     };
   }, [token, onSuccess]);
- 
+
   return { status, message };
 };

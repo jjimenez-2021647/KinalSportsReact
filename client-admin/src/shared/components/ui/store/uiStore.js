@@ -1,19 +1,19 @@
 import { create } from "zustand";
- 
+
 export const useUIStore = create((set) => ({
     modal: {
         isOpen: false,
         title: "",
         message: "",
     },
- 
+
     confirmModal: {
         isOpen: false,
         title: "",
         message: "",
         onConfirm: null,
     },
- 
+
     openModal: (title, message) =>
         set({
             modal: {
@@ -22,7 +22,7 @@ export const useUIStore = create((set) => ({
                 message,
             },
         }),
- 
+
     closeModal: () =>
         set({
             modal: {
@@ -31,8 +31,8 @@ export const useUIStore = create((set) => ({
                 message: "",
             },
         }),
- 
-    openConfirm: ({title, message, onConfirm}) =>
+
+    openConfirm: ({ title, message, onConfirm }) =>
         set({
             confirmModal: {
                 isOpen: true,
@@ -41,7 +41,7 @@ export const useUIStore = create((set) => ({
                 onConfirm,
             },
         }),
- 
+
     closeConfirm: () =>
         set({
             confirmModal: {

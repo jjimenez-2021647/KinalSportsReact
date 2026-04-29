@@ -20,9 +20,9 @@ export const Sidebar = () => {
                         <li key={item.to}>
                             <Link
                                 to={item.to}
-                                className={`block px-4 py-2 rounded-lg font-medium transition-colors sidebar-underline
-                                        ${active ? " active text-main-blue " : " text-gray-700 hover:bg-gray-100"}`}
-                                style={active ? { fontWeight: 700 } : {}}
+                                className={`block px-4 py-2 rounded-lg font-medium transition-colors sidebar-underline ${
+                                    active ? " active text-main-blue " : " text-gray-700 hover:bg-gray-100"}`}
+                                style={active ? { fontWeight: 700} : {}}
                             >
                                 {item.label}
                             </Link>

@@ -5,22 +5,21 @@ import toast from "react-hot-toast";
 
 export const LoginForm = ({ onForgot }) => {
 
+    const navigate = useNavigate();
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const login = useAuthStore(state => state.login);
     const loading = useAuthStore(state => state.loading);
     const error = useAuthStore(state => state.error);
-    const navigate = useNavigate();
+
     const onSubmit = async (data) => {
         //Mandar data al backend para validar credenciales.
         const res = await login(data)
-        console.log(data);
-
-        if (res.success) {
-            navigate("/dashboard");
-            toast.success("Credenciales válidas", {duration: 4000});
-        } else {
-            toast.error("Error de autenticación", {duration: 4000});
+        console.log(res);
+        if(res.success) {
+            navigate("/dashboard")
+            toast.success("¡Bienvenido de nuevo!", { duration: 4000})
         }
     }
 
@@ -82,7 +81,7 @@ export const LoginForm = ({ onForgot }) => {
                             transition-colors duration-200 text-sm disabled:opacity-50"
                 disabled={loading}
             >
-                {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                {loading ? "Iniciando..." : "Iniciar Sesión"}
             </button>
 
             <p className="text-center text-sm">

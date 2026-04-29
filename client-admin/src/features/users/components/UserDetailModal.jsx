@@ -1,5 +1,5 @@
 import { Spinner } from "../../../shared/components/layout/Spinner.jsx";
-import defaultAvatarImg from "../../../assets/img/yo bien aki y la crew.jpg";
+import defaultAvatarImg from "../../../assets/img/avatarDefault.png";
 import { useState } from "react";
 
 export const UserDetailModal = ({
@@ -14,26 +14,27 @@ export const UserDetailModal = ({
 
     const [ role, setRole ] = useState(user?.role || "USER_ROLE");
 
-    const avatarSrc = (()=>{
+    const avatarSrc = (() => {
+
         const value = user?.profilePicture?.trim();
-        if(!value) return defaultAvatarImg;
-        
-        if( value.startsWith("http://") || value.startsWith("https://")){
+        if( !value ) return defaultAvatarImg;
+
+        if( value.startsWith("http://" ) || value.startsWith("https://")){
             return value;
         }
 
-const cloudinaryBase =
-        import.meta.env.VITE_CLOUDINARY_BASE_URL ||
-        "https://res.cloudinary.com/dqx1m6nxh/image/upload/"
-        return `${cloudinaryBase}${value.replace(/^\/|\/$/g, '')}`
+        const cloudinaryBase =
+            import.meta.env.VITE_CLOUDINARY_BASE_URL ||
+            "https://res.cloudinary.com/dqx1m6nxh/image/upload/";
 
+        return `${cloudinaryBase}${value.replace(/^\+/, "")}`;
     })();
 
     const isCurrentUser = currentUserId === user.id;
     const hasChanges = role !== user.role;
 
     const handleSave = async () => {
-        if (!hasChanges || isCurrentUser) {
+        if(!hasChanges || isCurrentUser) {
             onClose();
             return;
         }
@@ -67,7 +68,6 @@ const cloudinaryBase =
                                 e.currentTarget.onError = null;
                                 e.currentTarget.src = defaultAvatarImg
                             }}
-                        
                         />
                         <div>
                             <p className="font-bold text-gray-900 text-lg">
@@ -111,7 +111,7 @@ const cloudinaryBase =
                         </select>
                         {isCurrentUser && (
                             <p className="text-xs text-gray-500 mt-1">
-                                No puedes cambiar tu propio rol
+                                No pudes cambiar tu propio rol.
                             </p>
                         )}
                     </div>
